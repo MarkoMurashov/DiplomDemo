@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiplomDemo", "DiplomDemo\DiplomDemo.csproj", "{4881DCDB-D7E0-47D6-9DBE-CD6687A11A4B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GRASP Viewer", "GRASP Viewer\GRASP Viewer.csproj", "{ED974605-0AB9-4BA9-8F9E-913912AB62D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GRASP", "GRASP\GRASP.csproj", "{48C4B965-AAED-423D-ACE1-04B2D1373195}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4881DCDB-D7E0-47D6-9DBE-CD6687A11A4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4881DCDB-D7E0-47D6-9DBE-CD6687A11A4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4881DCDB-D7E0-47D6-9DBE-CD6687A11A4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4881DCDB-D7E0-47D6-9DBE-CD6687A11A4B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED974605-0AB9-4BA9-8F9E-913912AB62D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED974605-0AB9-4BA9-8F9E-913912AB62D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED974605-0AB9-4BA9-8F9E-913912AB62D8}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Business logic\FileReader.cs" />
     <Compile Include="Business logic\GRASPManager.cs" />
-    <Compile Include="Main.cs" />
     <Compile Include="Models\Instance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

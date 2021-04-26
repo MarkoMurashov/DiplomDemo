@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnRun = new System.Windows.Forms.Button();
             this.chartMain = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnZoomPlus = new System.Windows.Forms.Button();
@@ -44,6 +44,11 @@
             this.lblInitialDistValue = new System.Windows.Forms.Label();
             this.lblResultValue = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
+            this.labelVehicleCount = new System.Windows.Forms.Label();
+            this.labelVehicleCapacity = new System.Windows.Forms.Label();
+            this.textBoxVehicleCount = new System.Windows.Forms.TextBox();
+            this.textBoxVehicleCapacity = new System.Windows.Forms.TextBox();
+            this.checkedListBoxRoutes = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.chartMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartInitial)).BeginInit();
             this.SuspendLayout();
@@ -60,17 +65,17 @@
             // 
             // chartMain
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartMain.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartMain.Legends.Add(legend3);
+            chartArea7.Name = "ChartArea1";
+            this.chartMain.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.chartMain.Legends.Add(legend7);
             this.chartMain.Location = new System.Drawing.Point(29, 12);
             this.chartMain.Name = "chartMain";
             this.chartMain.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chartMain.Series.Add(series3);
+            series7.ChartArea = "ChartArea1";
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.chartMain.Series.Add(series7);
             this.chartMain.Size = new System.Drawing.Size(728, 726);
             this.chartMain.TabIndex = 1;
             this.chartMain.Text = "Route";
@@ -97,16 +102,16 @@
             // 
             // chartInitial
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartInitial.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartInitial.Legends.Add(legend4);
+            chartArea8.Name = "ChartArea1";
+            this.chartInitial.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.chartInitial.Legends.Add(legend8);
             this.chartInitial.Location = new System.Drawing.Point(784, 12);
             this.chartInitial.Name = "chartInitial";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chartInitial.Series.Add(series4);
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.chartInitial.Series.Add(series8);
             this.chartInitial.Size = new System.Drawing.Size(476, 453);
             this.chartInitial.TabIndex = 4;
             this.chartInitial.Text = "Initial";
@@ -156,11 +161,57 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // labelVehicleCount
+            // 
+            this.labelVehicleCount.AutoSize = true;
+            this.labelVehicleCount.Location = new System.Drawing.Point(1007, 498);
+            this.labelVehicleCount.Name = "labelVehicleCount";
+            this.labelVehicleCount.Size = new System.Drawing.Size(97, 17);
+            this.labelVehicleCount.TabIndex = 9;
+            this.labelVehicleCount.Text = "Vehicle count:";
+            // 
+            // labelVehicleCapacity
+            // 
+            this.labelVehicleCapacity.AutoSize = true;
+            this.labelVehicleCapacity.Location = new System.Drawing.Point(1007, 561);
+            this.labelVehicleCapacity.Name = "labelVehicleCapacity";
+            this.labelVehicleCapacity.Size = new System.Drawing.Size(114, 17);
+            this.labelVehicleCapacity.TabIndex = 10;
+            this.labelVehicleCapacity.Text = "Vehicle capacity:";
+            // 
+            // textBoxVehicleCount
+            // 
+            this.textBoxVehicleCount.Location = new System.Drawing.Point(1142, 494);
+            this.textBoxVehicleCount.Name = "textBoxVehicleCount";
+            this.textBoxVehicleCount.Size = new System.Drawing.Size(100, 22);
+            this.textBoxVehicleCount.TabIndex = 11;
+            // 
+            // textBoxVehicleCapacity
+            // 
+            this.textBoxVehicleCapacity.Location = new System.Drawing.Point(1142, 556);
+            this.textBoxVehicleCapacity.Name = "textBoxVehicleCapacity";
+            this.textBoxVehicleCapacity.Size = new System.Drawing.Size(100, 22);
+            this.textBoxVehicleCapacity.TabIndex = 12;
+            // 
+            // checkedListBoxRoutes
+            // 
+            this.checkedListBoxRoutes.FormattingEnabled = true;
+            this.checkedListBoxRoutes.Location = new System.Drawing.Point(784, 599);
+            this.checkedListBoxRoutes.Name = "checkedListBoxRoutes";
+            this.checkedListBoxRoutes.Size = new System.Drawing.Size(320, 140);
+            this.checkedListBoxRoutes.TabIndex = 13;
+            this.checkedListBoxRoutes.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxRoutes_ItemCheck);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1272, 772);
+            this.Controls.Add(this.checkedListBoxRoutes);
+            this.Controls.Add(this.textBoxVehicleCapacity);
+            this.Controls.Add(this.textBoxVehicleCount);
+            this.Controls.Add(this.labelVehicleCapacity);
+            this.Controls.Add(this.labelVehicleCount);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.lblResultValue);
             this.Controls.Add(this.lblInitialDistValue);
@@ -193,5 +244,10 @@
         private System.Windows.Forms.Label lblInitialDistValue;
         private System.Windows.Forms.Label lblResultValue;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Label labelVehicleCount;
+        private System.Windows.Forms.Label labelVehicleCapacity;
+        private System.Windows.Forms.TextBox textBoxVehicleCount;
+        private System.Windows.Forms.TextBox textBoxVehicleCapacity;
+        private System.Windows.Forms.CheckedListBox checkedListBoxRoutes;
     }
 }

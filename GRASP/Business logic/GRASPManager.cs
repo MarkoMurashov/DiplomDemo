@@ -1,6 +1,7 @@
 ﻿using GRASP.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,40 +10,97 @@ namespace GRASP.Business_logic
 {
     public class GRASPManager
     {
-        public List<int> Execute(List<Instance> dataset, out List<int> initialResult, double alpha = 0.2)
+        private float vehicleCapacity;
+
+        private int vehicleCount;
+
+        private List<float> currentVehicleCapasity;
+
+        public GRASPManager(int vehicleCount, float vehicleCapacity)
         {
-            initialResult = GreedyAlgorithm(dataset);
+            this.vehicleCapacity = vehicleCapacity;
+            this.vehicleCount = vehicleCount;
+            InitVehicleCapacity();
+        }
 
-            Console.WriteLine("Result:");
-            foreach (var point in initialResult)
+        private void InitVehicleCapacity()
+        {
+            currentVehicleCapasity = new List<float>();
+            for (int i = 0; i < vehicleCount; i++)
             {
-                Console.Write($"{point}\t");
+                currentVehicleCapasity.Add(0);
             }
-            Console.WriteLine("Dist   " + CalculateDistanceValueForAllRoute(dataset, initialResult));
+        }
 
+        public List<List<int>> Execute(List<Instance> dataset, out List<List<int>> initialResult, double alpha = 0.2)
+        {
+            initialResult = new List<List<int>>();
+            for (int z = 0; z < vehicleCount; z++)
+            {
+                initialResult.Add(GreedyAlgorithm(dataset, z));
+            }            
+            var bestSolution = initialResult;
             var currentRoute = initialResult;
 
-            int k = 0;
-            while (k < 5)
+            //int iterator = 0;
+            //while (iterator < 5 || currentVehicleCapasity.All(vehicle => vehicle == vehicleCapacity))
+            //{
+            //    if (iterator != 0)
+            //    {
+            //        ResetDataset(dataset);
+            //        currentRoute = GreedyAlgorithm(dataset);
+            //    }                
+
+            //    int k = 0;
+            //    while (k < 5)
+            //    {
+            //        var oldRouteBeforeLocalSearch = currentRoute;
+            //        for (int i = 1; i < currentRoute.Count - 2; i++)
+            //        {
+            //            for (int j = i + 1; j < currentRoute.Count; j++)
+            //            {
+            //                double oldDistance = CalculateDistanceValueForAllRoute(dataset, currentRoute);
+
+            //                var newRoute = twoOptSwap(currentRoute, i, j);
+            //                double newDistance = CalculateDistanceValueForAllRoute(dataset, newRoute);
+
+            //                if (newDistance < oldDistance)
+            //                {
+            //                    currentRoute = newRoute;
+            //                }
+            //            }
+            //        }
+
+            //        if(isRoutesSame(currentRoute, oldRouteBeforeLocalSearch))
+            //        {
+            //            break;
+            //        }
+            //        k++;
+            //    }
+
+            //    double oldDist = CalculateDistanceValueForAllRoute(dataset, bestSolution);
+            //    double currentDist= CalculateDistanceValueForAllRoute(dataset, currentRoute);
+            //    if (currentDist < oldDist)
+            //    {
+            //        bestSolution = currentRoute;
+            //    }
+            //    iterator++;
+            //}
+
+            return bestSolution;
+        }
+
+        private bool isRoutesSame(List<int> route1, List<int> route2)
+        {
+            for(int i = 0; i < route1.Count; i++)
             {
-                for (int i = 1; i < initialResult.Count - 2; i++)
+                if(route1[i] != route2[i])
                 {
-                    for (int j = i + 2; j < initialResult.Count; j++)
-                    {
-                        double oldDistance = CalculateDistanceValueForAllRoute(dataset, currentRoute);
-
-                        var newRoute = twoOptSwap(currentRoute, i, j);
-                        double newDistance = CalculateDistanceValueForAllRoute(dataset, newRoute);
-
-                        if (newDistance < oldDistance)
-                        {
-                            currentRoute = newRoute;
-                        }
-                    }
+                    return false;
                 }
-                k++;
             }
-            return currentRoute;
+
+            return true;
         }
 
         // TwoOpt Algorithm
@@ -82,12 +140,47 @@ namespace GRASP.Business_logic
             return sum;
         }
 
-        private List<int> GreedyAlgorithm(List<Instance> dataset, double alpha = 0.2)
+        public double CalculateDistanceValueForAllRouteWithVehicles(List<Instance> dataset, List<List<int>> route)
+        {
+            double sum = 0;
+
+            for (int i = 0; i < route.Count; i++)
+            {
+                for(int j = 0; j < route[i].Count; j++)
+                {
+                    var intstance1 = dataset.FirstOrDefault(item => item.ID == route[i][j]);
+                    Instance instance2;
+                    if (j + 1 == route[i].Count)
+                    {
+                        instance2 = dataset.FirstOrDefault(item => item.ID == route[i][0]);
+                    }
+                    else
+                    {
+                        instance2 = dataset.FirstOrDefault(item => item.ID == route[i][j + 1]);
+                    }
+
+                    sum += FindLength(intstance1, instance2);
+                }                
+            }
+
+            return sum;
+        }
+
+        private void ResetDataset(List<Instance> dataset)
+        {
+            for (int i = 0; i < dataset.Count; i++)
+            {
+                dataset[i].IsDone = false;
+            }
+        }
+
+        private List<int> GreedyAlgorithm(List<Instance> dataset, int currentVehicleIndex, double alpha = 0.2)
         {
             var route = new List<int>();
             int startPoint = 0;
 
             route.Add(startPoint);
+            dataset.FirstOrDefault(item => item.ID == startPoint).IsDone = true;
 
             while (!dataset.All(item => item.IsDone))
             {
@@ -101,27 +194,39 @@ namespace GRASP.Business_logic
                 double cMax = distDict.Max(x => x.Value);
 
                 double criteria = cMin + 0.2 * (cMax - cMin);
+                double demandCriteria = vehicleCapacity - currentVehicleCapasity[currentVehicleIndex];
 
                 Random random = new Random();
 
                 var RCL = new HashSet<int>();
                 foreach (var dist in distDict)
                 {
-                    if (dist.Value <= criteria)
+                    float capacity = dataset.FirstOrDefault(item => item.ID == dist.Key).Demand;
+                    if (dist.Value <= criteria && capacity <= demandCriteria)
                     {
                         RCL.Add(dist.Key);
                     }
                 }
+               
+                if(RCL.Count == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    startPoint = RCL.ElementAt(random.Next(RCL.Count));
+                    var inst = dataset.FirstOrDefault(item => item.ID == startPoint);
+                    currentVehicleCapasity[currentVehicleIndex] += inst.Demand;
+                    route.Add(startPoint);
 
-                dataset.FirstOrDefault(item => item.ID == startPoint).IsDone = true;
-
-                startPoint = RCL.ElementAt(random.Next(RCL.Count));
-                route.Add(startPoint);
+                    dataset.FirstOrDefault(item => item.ID == startPoint).IsDone = true;
+                }               
             }
+            route.Add(0);
 
             return route;
         }
-
+        
         private Dictionary<int, double> CalculateDistance(List<Instance> dataset, int startPoint)
         {
             var dist = new Dictionary<int, double>();
