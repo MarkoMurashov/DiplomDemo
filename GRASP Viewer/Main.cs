@@ -12,38 +12,36 @@ namespace GRASP_Viewer
 {
     public partial class Main : Form
     {
-        public Main()
-        {
-            InitializeComponent();
-        }
-
         private int zoomXStart = 0;
         private int zoomXEnd = 100;
         private int zoomYStart = 0;
         private int zoomYEnd = 100;
 
-        private void btnRun_Click(object sender, EventArgs e)
-        {           
-            var fileReader = new FileReader();
-            var dataset = fileReader.Read("dataset.txt");
-            //var dataset = fileReader.Read("small test.txt");
+        public Main()
+        {
+            InitializeComponent();
+            EnableChart(chartMain);
+            EnableChart(chartInitial);
+        }
 
-            int vCount = int.Parse(textBoxVehicleCount.Text);
-            float vCapacity = float.Parse(textBoxVehicleCapacity.Text, CultureInfo.InvariantCulture.NumberFormat);
+        #region private methods
 
-            var grasp = new GRASPManager(vCount, vCapacity);
-            var result = grasp.Execute(dataset, out List<List<int>> initialRoute);
+        private void EnableChart(Chart chart)
+        {
+            chart.ChartAreas[0].CursorX.IsUserEnabled = true;
+            chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+            chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            chart.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+            chart.ChartAreas[0].CursorY.IsUserEnabled = true;
+            chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
+            chart.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
+            chart.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
+        }
 
-            DrawRoute(chartMain, dataset, result);
-            DrawRoute(chartInitial, dataset, initialRoute);
-
-            for(int i = 0; i < initialRoute.Count; i++)
-            {
-                checkedListBoxRoutes.Items.Add(i);
-            }
-
-            lblResultValue.Text = grasp.CalculateDistanceValueForAllRouteWithVehicles(dataset, result).ToString();
-            lblInitialDistValue.Text = grasp.CalculateDistanceValueForAllRouteWithVehicles(dataset, initialRoute).ToString();
+        private void Zoom(Chart chart, bool isZoom)
+        {
+            chart.ChartAreas[0].AxisX.ScaleView.Zoom(zoomXStart, zoomXEnd);
+            chart.ChartAreas[0].AxisY.ScaleView.Zoom(zoomYStart, zoomYEnd);
         }
 
         private void DrawRoute(Chart chart, List<Instance> dataset, List<List<int>> result)
@@ -54,7 +52,7 @@ namespace GRASP_Viewer
                 chart.Series.Add(new Series(str_i));
 
                 for (int j = 0; j < result[i].Count; j++)
-                {                                       
+                {
                     var instance = dataset.FirstOrDefault(item => item.ID == result[i][j]);
                     chart.Series[str_i].Points.AddXY(instance.X, instance.Y);
 
@@ -77,21 +75,42 @@ namespace GRASP_Viewer
             }
         }
 
-        private void Zoom(Chart chart, bool isZoom)
-        {
-            chart.ChartAreas[0].AxisX.ScaleView.Zoom(zoomXStart, zoomXEnd);
-            chart.ChartAreas[0].CursorX.IsUserEnabled = isZoom;
-            chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = isZoom;
-            chart.ChartAreas[0].AxisX.ScaleView.Zoomable = isZoom;
-            chart.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = isZoom;
+        #endregion
 
-            chart.ChartAreas[0].AxisY.ScaleView.Zoom(zoomYStart, zoomYEnd);
-            chart.ChartAreas[0].CursorY.IsUserEnabled = isZoom;
-            chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = isZoom;
-            chart.ChartAreas[0].AxisY.ScaleView.Zoomable = isZoom;
-            chart.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = isZoom;
+        private void btnRun_Click(object sender, EventArgs e)
+        {           
+            var fileReader = new FileReader();
+            var dataset = fileReader.Read("dataset.txt");
+            //var dataset = fileReader.Read("small test.txt");
+
+            if (!int.TryParse(textBoxVehicleCount.Text, out int vCount))
+            {
+                MessageBox.Show("Please enter valid value for vehicle count");
+                return;
+            }
+            if(!float.TryParse(textBoxVehicleCapacity.Text, out float vCapacity))
+            {
+                MessageBox.Show("Please enter valid value for vehicle capacity");
+                return;
+            }
+
+            var grasp = new GRASPManager(dataset, vCount, vCapacity);
+            var result = grasp.Execute(out List<List<int>> initialRoute);
+
+            DrawRoute(chartMain, dataset, result);
+            DrawRoute(chartInitial, dataset, initialRoute);
+
+            for(int i = 0; i < initialRoute.Count; i++)
+            {
+                checkedListBoxRoutes.Items.Add(i);
+                checkedListBoxRoutes.SetItemChecked(i, true);
+            }
+
+            lblResultValue.Text = grasp.CalculateDistanceValueForAllRouteWithVehicles(dataset, result).ToString();
+            lblInitialDistValue.Text = grasp.CalculateDistanceValueForAllRouteWithVehicles(dataset, initialRoute).ToString();
+
         }
-
+           
         private void btnZoomPlus_Click(object sender, EventArgs e)
         {
             zoomXStart += 5;
@@ -119,20 +138,48 @@ namespace GRASP_Viewer
             checkedListBoxRoutes.Items.Clear();
         }
 
-        private void Main_Load(object sender, EventArgs e)
-        {
-            //ChartControl chartControl = new ChartControl();
-        }
-
         private void checkedListBoxRoutes_ItemCheck(object sender, ItemCheckEventArgs e)
         {           
             foreach (var item in checkedListBoxRoutes.Items)
             {
                 if(e.Index.ToString() == item.ToString())
                 {
-                    chartMain.Series[item.ToString()].Enabled = e.NewValue == CheckState.Checked ? false : true;
-                    chartInitial.Series[item.ToString()].Enabled = e.NewValue == CheckState.Checked ? false : true;
+                    chartMain.Series[item.ToString()].Enabled = e.NewValue == CheckState.Checked ? true : false;
+                    chartInitial.Series[item.ToString()].Enabled = e.NewValue == CheckState.Checked ? true : false;
                 }
+            }
+        }
+
+        private void buttonCheckAll_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBoxRoutes.Items.Count; i++)
+            {
+                checkedListBoxRoutes.SetItemChecked(i, true);
+            }
+        }
+
+        private void buttonUncheckAll_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBoxRoutes.Items.Count; i++)
+            {
+                checkedListBoxRoutes.SetItemChecked(i, false);
+            }
+        }
+
+        private void textBoxVehicleCount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBoxVehicleCapacity_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+            (e.KeyChar != ','))
+            {
+                e.Handled = true;
             }
         }
     }

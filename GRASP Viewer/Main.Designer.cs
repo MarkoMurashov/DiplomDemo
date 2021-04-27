@@ -49,13 +49,17 @@
             this.textBoxVehicleCount = new System.Windows.Forms.TextBox();
             this.textBoxVehicleCapacity = new System.Windows.Forms.TextBox();
             this.checkedListBoxRoutes = new System.Windows.Forms.CheckedListBox();
+            this.labelRes = new System.Windows.Forms.Label();
+            this.labelInit = new System.Windows.Forms.Label();
+            this.buttonUncheckAll = new System.Windows.Forms.Button();
+            this.buttonCheckAll = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartInitial)).BeginInit();
             this.SuspendLayout();
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(1129, 716);
+            this.btnRun.Location = new System.Drawing.Point(1225, 809);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(122, 33);
             this.btnRun.TabIndex = 0;
@@ -69,20 +73,20 @@
             this.chartMain.ChartAreas.Add(chartArea7);
             legend7.Name = "Legend1";
             this.chartMain.Legends.Add(legend7);
-            this.chartMain.Location = new System.Drawing.Point(29, 12);
+            this.chartMain.Location = new System.Drawing.Point(21, 54);
             this.chartMain.Name = "chartMain";
             this.chartMain.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
             series7.ChartArea = "ChartArea1";
             series7.Legend = "Legend1";
             series7.Name = "Series1";
             this.chartMain.Series.Add(series7);
-            this.chartMain.Size = new System.Drawing.Size(728, 726);
+            this.chartMain.Size = new System.Drawing.Size(832, 726);
             this.chartMain.TabIndex = 1;
             this.chartMain.Text = "Route";
             // 
             // btnZoomPlus
             // 
-            this.btnZoomPlus.Location = new System.Drawing.Point(1129, 638);
+            this.btnZoomPlus.Location = new System.Drawing.Point(1225, 731);
             this.btnZoomPlus.Name = "btnZoomPlus";
             this.btnZoomPlus.Size = new System.Drawing.Size(122, 33);
             this.btnZoomPlus.TabIndex = 2;
@@ -92,7 +96,7 @@
             // 
             // btnZoomMinus
             // 
-            this.btnZoomMinus.Location = new System.Drawing.Point(1129, 677);
+            this.btnZoomMinus.Location = new System.Drawing.Point(1225, 770);
             this.btnZoomMinus.Name = "btnZoomMinus";
             this.btnZoomMinus.Size = new System.Drawing.Size(122, 33);
             this.btnZoomMinus.TabIndex = 3;
@@ -106,7 +110,7 @@
             this.chartInitial.ChartAreas.Add(chartArea8);
             legend8.Name = "Legend1";
             this.chartInitial.Legends.Add(legend8);
-            this.chartInitial.Location = new System.Drawing.Point(784, 12);
+            this.chartInitial.Location = new System.Drawing.Point(871, 54);
             this.chartInitial.Name = "chartInitial";
             series8.ChartArea = "ChartArea1";
             series8.Legend = "Legend1";
@@ -119,41 +123,45 @@
             // labelInitialDist
             // 
             this.labelInitialDist.AutoSize = true;
-            this.labelInitialDist.Location = new System.Drawing.Point(784, 499);
+            this.labelInitialDist.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelInitialDist.Location = new System.Drawing.Point(1021, 522);
             this.labelInitialDist.Name = "labelInitialDist";
-            this.labelInitialDist.Size = new System.Drawing.Size(97, 17);
+            this.labelInitialDist.Size = new System.Drawing.Size(134, 25);
             this.labelInitialDist.TabIndex = 5;
             this.labelInitialDist.Text = "Initial distance";
             // 
             // labelResult
             // 
-            this.labelResult.Location = new System.Drawing.Point(784, 556);
+            this.labelResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelResult.Location = new System.Drawing.Point(288, 792);
             this.labelResult.Name = "labelResult";
-            this.labelResult.Size = new System.Drawing.Size(106, 17);
+            this.labelResult.Size = new System.Drawing.Size(106, 37);
             this.labelResult.TabIndex = 0;
             this.labelResult.Text = "Result distance";
             // 
             // lblInitialDistValue
             // 
             this.lblInitialDistValue.AutoSize = true;
-            this.lblInitialDistValue.Location = new System.Drawing.Point(926, 498);
+            this.lblInitialDistValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblInitialDistValue.Location = new System.Drawing.Point(1163, 521);
             this.lblInitialDistValue.Name = "lblInitialDistValue";
-            this.lblInitialDistValue.Size = new System.Drawing.Size(16, 17);
+            this.lblInitialDistValue.Size = new System.Drawing.Size(23, 25);
             this.lblInitialDistValue.TabIndex = 6;
             this.lblInitialDistValue.Text = "0";
             // 
             // lblResultValue
             // 
             this.lblResultValue.AutoSize = true;
-            this.lblResultValue.Location = new System.Drawing.Point(926, 555);
+            this.lblResultValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblResultValue.Location = new System.Drawing.Point(400, 792);
             this.lblResultValue.Name = "lblResultValue";
-            this.lblResultValue.Size = new System.Drawing.Size(16, 17);
+            this.lblResultValue.Size = new System.Drawing.Size(23, 25);
             this.lblResultValue.TabIndex = 7;
             this.lblResultValue.Text = "0";
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(1129, 599);
+            this.btnClear.Location = new System.Drawing.Point(1225, 692);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(122, 33);
             this.btnClear.TabIndex = 8;
@@ -164,49 +172,99 @@
             // labelVehicleCount
             // 
             this.labelVehicleCount.AutoSize = true;
-            this.labelVehicleCount.Location = new System.Drawing.Point(1007, 498);
+            this.labelVehicleCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelVehicleCount.Location = new System.Drawing.Point(868, 572);
             this.labelVehicleCount.Name = "labelVehicleCount";
-            this.labelVehicleCount.Size = new System.Drawing.Size(97, 17);
+            this.labelVehicleCount.Size = new System.Drawing.Size(136, 25);
             this.labelVehicleCount.TabIndex = 9;
             this.labelVehicleCount.Text = "Vehicle count:";
             // 
             // labelVehicleCapacity
             // 
             this.labelVehicleCapacity.AutoSize = true;
-            this.labelVehicleCapacity.Location = new System.Drawing.Point(1007, 561);
+            this.labelVehicleCapacity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelVehicleCapacity.Location = new System.Drawing.Point(868, 634);
             this.labelVehicleCapacity.Name = "labelVehicleCapacity";
-            this.labelVehicleCapacity.Size = new System.Drawing.Size(114, 17);
+            this.labelVehicleCapacity.Size = new System.Drawing.Size(160, 25);
             this.labelVehicleCapacity.TabIndex = 10;
             this.labelVehicleCapacity.Text = "Vehicle capacity:";
             // 
             // textBoxVehicleCount
             // 
-            this.textBoxVehicleCount.Location = new System.Drawing.Point(1142, 494);
+            this.textBoxVehicleCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxVehicleCount.Location = new System.Drawing.Point(1051, 572);
             this.textBoxVehicleCount.Name = "textBoxVehicleCount";
-            this.textBoxVehicleCount.Size = new System.Drawing.Size(100, 22);
+            this.textBoxVehicleCount.Size = new System.Drawing.Size(296, 30);
             this.textBoxVehicleCount.TabIndex = 11;
+            this.textBoxVehicleCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxVehicleCount_KeyPress);
             // 
             // textBoxVehicleCapacity
             // 
-            this.textBoxVehicleCapacity.Location = new System.Drawing.Point(1142, 556);
+            this.textBoxVehicleCapacity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxVehicleCapacity.Location = new System.Drawing.Point(1051, 629);
             this.textBoxVehicleCapacity.Name = "textBoxVehicleCapacity";
-            this.textBoxVehicleCapacity.Size = new System.Drawing.Size(100, 22);
+            this.textBoxVehicleCapacity.Size = new System.Drawing.Size(296, 30);
             this.textBoxVehicleCapacity.TabIndex = 12;
+            this.textBoxVehicleCapacity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxVehicleCapacity_KeyPress);
             // 
             // checkedListBoxRoutes
             // 
             this.checkedListBoxRoutes.FormattingEnabled = true;
-            this.checkedListBoxRoutes.Location = new System.Drawing.Point(784, 599);
+            this.checkedListBoxRoutes.Location = new System.Drawing.Point(1026, 685);
             this.checkedListBoxRoutes.Name = "checkedListBoxRoutes";
-            this.checkedListBoxRoutes.Size = new System.Drawing.Size(320, 140);
+            this.checkedListBoxRoutes.Size = new System.Drawing.Size(169, 157);
             this.checkedListBoxRoutes.TabIndex = 13;
             this.checkedListBoxRoutes.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxRoutes_ItemCheck);
+            // 
+            // labelRes
+            // 
+            this.labelRes.AutoSize = true;
+            this.labelRes.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelRes.Location = new System.Drawing.Point(326, 13);
+            this.labelRes.Name = "labelRes";
+            this.labelRes.Size = new System.Drawing.Size(143, 29);
+            this.labelRes.TabIndex = 14;
+            this.labelRes.Text = "Final result";
+            // 
+            // labelInit
+            // 
+            this.labelInit.AutoSize = true;
+            this.labelInit.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelInit.Location = new System.Drawing.Point(1077, 13);
+            this.labelInit.Name = "labelInit";
+            this.labelInit.Size = new System.Drawing.Size(155, 29);
+            this.labelInit.TabIndex = 15;
+            this.labelInit.Text = "Initilal result";
+            // 
+            // buttonUncheckAll
+            // 
+            this.buttonUncheckAll.Location = new System.Drawing.Point(873, 780);
+            this.buttonUncheckAll.Name = "buttonUncheckAll";
+            this.buttonUncheckAll.Size = new System.Drawing.Size(122, 37);
+            this.buttonUncheckAll.TabIndex = 16;
+            this.buttonUncheckAll.Text = "Uncheck all";
+            this.buttonUncheckAll.UseVisualStyleBackColor = true;
+            this.buttonUncheckAll.Click += new System.EventHandler(this.buttonUncheckAll_Click);
+            // 
+            // buttonCheckAll
+            // 
+            this.buttonCheckAll.Location = new System.Drawing.Point(873, 720);
+            this.buttonCheckAll.Name = "buttonCheckAll";
+            this.buttonCheckAll.Size = new System.Drawing.Size(122, 35);
+            this.buttonCheckAll.TabIndex = 17;
+            this.buttonCheckAll.Text = "Check all";
+            this.buttonCheckAll.UseVisualStyleBackColor = true;
+            this.buttonCheckAll.Click += new System.EventHandler(this.buttonCheckAll_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1272, 772);
+            this.ClientSize = new System.Drawing.Size(1379, 857);
+            this.Controls.Add(this.buttonCheckAll);
+            this.Controls.Add(this.buttonUncheckAll);
+            this.Controls.Add(this.labelInit);
+            this.Controls.Add(this.labelRes);
             this.Controls.Add(this.checkedListBoxRoutes);
             this.Controls.Add(this.textBoxVehicleCapacity);
             this.Controls.Add(this.textBoxVehicleCount);
@@ -224,7 +282,6 @@
             this.Controls.Add(this.btnRun);
             this.Name = "Main";
             this.Text = "Main";
-            this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartInitial)).EndInit();
             this.ResumeLayout(false);
@@ -249,5 +306,9 @@
         private System.Windows.Forms.TextBox textBoxVehicleCount;
         private System.Windows.Forms.TextBox textBoxVehicleCapacity;
         private System.Windows.Forms.CheckedListBox checkedListBoxRoutes;
+        private System.Windows.Forms.Label labelRes;
+        private System.Windows.Forms.Label labelInit;
+        private System.Windows.Forms.Button buttonUncheckAll;
+        private System.Windows.Forms.Button buttonCheckAll;
     }
 }
