@@ -65,8 +65,7 @@ namespace GRASP_Viewer
                 chart.Series[str_i].Points.AddXY(instance_tmp.X, instance_tmp.Y);
 
                 chart.Series[str_i].ChartType = SeriesChartType.Line;
-                //Random rnd = new Random();
-                //chart.Series[str_i].Color = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+
                 chart.Series[str_i].MarkerStyle = MarkerStyle.Circle;
                 chart.Series[str_i].BorderDashStyle = ChartDashStyle.Dash;
                 chart.Series[str_i].BorderWidth = 3;
@@ -115,8 +114,9 @@ namespace GRASP_Viewer
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            chartMain.Series["Series1"].Points.Clear();
-            chartInitial.Series["Series1"].Points.Clear();
+            chartMain.Series.Clear();
+            chartInitial.Series.Clear();
+            checkedListBoxRoutes.Items.Clear();
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -131,6 +131,7 @@ namespace GRASP_Viewer
                 if(e.Index.ToString() == item.ToString())
                 {
                     chartMain.Series[item.ToString()].Enabled = e.NewValue == CheckState.Checked ? false : true;
+                    chartInitial.Series[item.ToString()].Enabled = e.NewValue == CheckState.Checked ? false : true;
                 }
             }
         }

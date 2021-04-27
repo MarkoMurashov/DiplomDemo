@@ -35,68 +35,102 @@ namespace GRASP.Business_logic
         public List<List<int>> Execute(List<Instance> dataset, out List<List<int>> initialResult, double alpha = 0.2)
         {
             initialResult = new List<List<int>>();
-            for (int z = 0; z < vehicleCount; z++)
+            for (int z = 0; z < vehicleCount && !dataset.All(item => item.IsDone); z++)
             {
                 initialResult.Add(GreedyAlgorithm(dataset, z));
             }            
-            var bestSolution = initialResult;
-            var currentRoute = initialResult;
+            var bestSolution = CopySolution(initialResult);
+            var currentRoute = CopySolution(initialResult);
 
-            //int iterator = 0;
-            //while (iterator < 5 || currentVehicleCapasity.All(vehicle => vehicle == vehicleCapacity))
-            //{
-            //    if (iterator != 0)
-            //    {
-            //        ResetDataset(dataset);
-            //        currentRoute = GreedyAlgorithm(dataset);
-            //    }                
+            int iterator = 0;
+            while (iterator < 15)
+            {
+                if (iterator != 0)
+                {
+                    ResetDataset(dataset);
+                    ResetCapacity();
+                    currentRoute.Clear();
+                    for (int z = 0; z < vehicleCount && !dataset.All(item => item.IsDone); z++)
+                    {
+                        currentRoute.Add(GreedyAlgorithm(dataset, z));
+                    }
+                }
 
-            //    int k = 0;
-            //    while (k < 5)
-            //    {
-            //        var oldRouteBeforeLocalSearch = currentRoute;
-            //        for (int i = 1; i < currentRoute.Count - 2; i++)
-            //        {
-            //            for (int j = i + 1; j < currentRoute.Count; j++)
-            //            {
-            //                double oldDistance = CalculateDistanceValueForAllRoute(dataset, currentRoute);
+                int k = 0;
+                while (k < 50)
+                {
+                    var oldRouteBeforeLocalSearch = CopySolution(currentRoute);
+                    for (int g = 0; g < currentRoute.Count; g++)
+                    {
+                        for (int i = 1; i < currentRoute[g].Count - 2; i++)
+                        {
+                            for (int j = i + 1; j < currentRoute[g].Count; j++)
+                            {
+                                double oldDistance = CalculateDistanceValueForAllRoute(dataset, currentRoute[g]);
 
-            //                var newRoute = twoOptSwap(currentRoute, i, j);
-            //                double newDistance = CalculateDistanceValueForAllRoute(dataset, newRoute);
+                                var newRoute = twoOptSwap(currentRoute[g], i, j);
+                                double newDistance = CalculateDistanceValueForAllRoute(dataset, newRoute);
 
-            //                if (newDistance < oldDistance)
-            //                {
-            //                    currentRoute = newRoute;
-            //                }
-            //            }
-            //        }
+                                if (newDistance < oldDistance)
+                                {
+                                    currentRoute[g] = newRoute;
+                                }
+                            }
+                        }
+                    }
 
-            //        if(isRoutesSame(currentRoute, oldRouteBeforeLocalSearch))
-            //        {
-            //            break;
-            //        }
-            //        k++;
-            //    }
+                    if (isRoutesSame(currentRoute, oldRouteBeforeLocalSearch))
+                    {
+                       break;
+                    }
+                    k++;
+                }
 
-            //    double oldDist = CalculateDistanceValueForAllRoute(dataset, bestSolution);
-            //    double currentDist= CalculateDistanceValueForAllRoute(dataset, currentRoute);
-            //    if (currentDist < oldDist)
-            //    {
-            //        bestSolution = currentRoute;
-            //    }
-            //    iterator++;
-            //}
+                double oldDist = CalculateDistanceValueForAllRouteWithVehicles(dataset, bestSolution);
+                double currentDist = CalculateDistanceValueForAllRouteWithVehicles(dataset, currentRoute);
+                if (currentDist < oldDist)
+                {
+                    bestSolution = CopySolution(currentRoute);
+                }
+                iterator++;
+            }
 
             return bestSolution;
         }
 
-        private bool isRoutesSame(List<int> route1, List<int> route2)
+
+        private List<List<int>> CopySolution(List<List<int>> route)
+        {
+            List<List<int>> newList = new List<List<int>>();
+            foreach(var item in route)
+            {
+                List<int> tmp = new List<int>();
+                foreach(int num in item)
+                {
+                    tmp.Add(num);
+                }
+                newList.Add(tmp);
+            }
+
+            return newList;
+        }
+
+        private void ResetCapacity()
+        {
+            for (int i = 0; i < vehicleCount; i++)
+                currentVehicleCapasity[i] = 0;
+        }
+
+        private bool isRoutesSame(List<List<int>> route1, List<List<int>> route2)
         {
             for(int i = 0; i < route1.Count; i++)
             {
-                if(route1[i] != route2[i])
+                for (int j = 0; j < route1[i].Count; j++)
                 {
-                    return false;
+                    if (route1[i][j] != route2[i][j])
+                    {
+                        return false;
+                    }
                 }
             }
 
