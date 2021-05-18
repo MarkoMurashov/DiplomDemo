@@ -17,6 +17,10 @@ namespace GRASP_Viewer
         private int zoomYStart = 0;
         private int zoomYEnd = 100;
 
+        private List<List<int>> result = new List<List<int>>();
+
+        private GRASPManager grasp;
+
         public Main()
         {
             InitializeComponent();
@@ -80,7 +84,7 @@ namespace GRASP_Viewer
         private void btnRun_Click(object sender, EventArgs e)
         {           
             var fileReader = new FileReader();
-            var dataset = fileReader.Read("dataset.txt");
+            var dataset = fileReader.Read("super df.txt"); 
             //var dataset = fileReader.Read("small test.txt");
 
             if (!int.TryParse(textBoxVehicleCount.Text, out int vCount))
@@ -94,13 +98,13 @@ namespace GRASP_Viewer
                 return;
             }
 
-            var grasp = new GRASPManager(dataset, vCount, vCapacity);
-            var result = grasp.Execute(out List<List<int>> initialRoute);
+            grasp = new GRASPManager(dataset, vCount, vCapacity);
+            result = grasp.Execute(out List<List<int>> initialRoute);
 
             DrawRoute(chartMain, dataset, result);
             DrawRoute(chartInitial, dataset, initialRoute);
 
-            for(int i = 0; i < initialRoute.Count; i++)
+            for(int i = 0; i < result.Count; i++)
             {
                 checkedListBoxRoutes.Items.Add(i);
                 checkedListBoxRoutes.SetItemChecked(i, true);
@@ -145,7 +149,6 @@ namespace GRASP_Viewer
                 if(e.Index.ToString() == item.ToString())
                 {
                     chartMain.Series[item.ToString()].Enabled = e.NewValue == CheckState.Checked ? true : false;
-                    chartInitial.Series[item.ToString()].Enabled = e.NewValue == CheckState.Checked ? true : false;
                 }
             }
         }
@@ -181,6 +184,21 @@ namespace GRASP_Viewer
             {
                 e.Handled = true;
             }
+        }
+
+        private void buttonMoreInfo_Click(object sender, EventArgs e)
+        {
+            string strToShow = string.Empty;
+
+            foreach (var item in checkedListBoxRoutes.CheckedItems)
+            {
+                int index = int.Parse(item.ToString());
+
+                strToShow += "\n============= " + index + " ====================\n";
+                strToShow += grasp.GetRouteInfo(result[index]);
+            }
+
+            richTextBoxDetailInfo.Text = strToShow;
         }
     }
 }

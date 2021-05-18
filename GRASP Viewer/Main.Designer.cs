@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnRun = new System.Windows.Forms.Button();
             this.chartMain = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnZoomPlus = new System.Windows.Forms.Button();
@@ -53,6 +53,8 @@
             this.labelInit = new System.Windows.Forms.Label();
             this.buttonUncheckAll = new System.Windows.Forms.Button();
             this.buttonCheckAll = new System.Windows.Forms.Button();
+            this.buttonMoreInfo = new System.Windows.Forms.Button();
+            this.richTextBoxDetailInfo = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chartMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartInitial)).BeginInit();
             this.SuspendLayout();
@@ -69,17 +71,17 @@
             // 
             // chartMain
             // 
-            chartArea7.Name = "ChartArea1";
-            this.chartMain.ChartAreas.Add(chartArea7);
-            legend7.Name = "Legend1";
-            this.chartMain.Legends.Add(legend7);
+            chartArea1.Name = "ChartArea1";
+            this.chartMain.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartMain.Legends.Add(legend1);
             this.chartMain.Location = new System.Drawing.Point(21, 54);
             this.chartMain.Name = "chartMain";
             this.chartMain.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            this.chartMain.Series.Add(series7);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartMain.Series.Add(series1);
             this.chartMain.Size = new System.Drawing.Size(832, 726);
             this.chartMain.TabIndex = 1;
             this.chartMain.Text = "Route";
@@ -106,16 +108,16 @@
             // 
             // chartInitial
             // 
-            chartArea8.Name = "ChartArea1";
-            this.chartInitial.ChartAreas.Add(chartArea8);
-            legend8.Name = "Legend1";
-            this.chartInitial.Legends.Add(legend8);
+            chartArea2.Name = "ChartArea1";
+            this.chartInitial.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartInitial.Legends.Add(legend2);
             this.chartInitial.Location = new System.Drawing.Point(871, 54);
             this.chartInitial.Name = "chartInitial";
-            series8.ChartArea = "ChartArea1";
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            this.chartInitial.Series.Add(series8);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartInitial.Series.Add(series2);
             this.chartInitial.Size = new System.Drawing.Size(476, 453);
             this.chartInitial.TabIndex = 4;
             this.chartInitial.Text = "Initial";
@@ -238,7 +240,7 @@
             // 
             // buttonUncheckAll
             // 
-            this.buttonUncheckAll.Location = new System.Drawing.Point(873, 780);
+            this.buttonUncheckAll.Location = new System.Drawing.Point(873, 743);
             this.buttonUncheckAll.Name = "buttonUncheckAll";
             this.buttonUncheckAll.Size = new System.Drawing.Size(122, 37);
             this.buttonUncheckAll.TabIndex = 16;
@@ -248,7 +250,7 @@
             // 
             // buttonCheckAll
             // 
-            this.buttonCheckAll.Location = new System.Drawing.Point(873, 720);
+            this.buttonCheckAll.Location = new System.Drawing.Point(873, 692);
             this.buttonCheckAll.Name = "buttonCheckAll";
             this.buttonCheckAll.Size = new System.Drawing.Size(122, 35);
             this.buttonCheckAll.TabIndex = 17;
@@ -256,11 +258,31 @@
             this.buttonCheckAll.UseVisualStyleBackColor = true;
             this.buttonCheckAll.Click += new System.EventHandler(this.buttonCheckAll_Click);
             // 
+            // buttonMoreInfo
+            // 
+            this.buttonMoreInfo.Location = new System.Drawing.Point(873, 794);
+            this.buttonMoreInfo.Name = "buttonMoreInfo";
+            this.buttonMoreInfo.Size = new System.Drawing.Size(122, 35);
+            this.buttonMoreInfo.TabIndex = 18;
+            this.buttonMoreInfo.Text = "Show more info";
+            this.buttonMoreInfo.UseVisualStyleBackColor = true;
+            this.buttonMoreInfo.Click += new System.EventHandler(this.buttonMoreInfo_Click);
+            // 
+            // richTextBoxDetailInfo
+            // 
+            this.richTextBoxDetailInfo.Location = new System.Drawing.Point(1372, 54);
+            this.richTextBoxDetailInfo.Name = "richTextBoxDetailInfo";
+            this.richTextBoxDetailInfo.Size = new System.Drawing.Size(323, 788);
+            this.richTextBoxDetailInfo.TabIndex = 19;
+            this.richTextBoxDetailInfo.Text = "";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1379, 857);
+            this.ClientSize = new System.Drawing.Size(1707, 857);
+            this.Controls.Add(this.richTextBoxDetailInfo);
+            this.Controls.Add(this.buttonMoreInfo);
             this.Controls.Add(this.buttonCheckAll);
             this.Controls.Add(this.buttonUncheckAll);
             this.Controls.Add(this.labelInit);
@@ -310,5 +332,7 @@
         private System.Windows.Forms.Label labelInit;
         private System.Windows.Forms.Button buttonUncheckAll;
         private System.Windows.Forms.Button buttonCheckAll;
+        private System.Windows.Forms.Button buttonMoreInfo;
+        private System.Windows.Forms.RichTextBox richTextBoxDetailInfo;
     }
 }

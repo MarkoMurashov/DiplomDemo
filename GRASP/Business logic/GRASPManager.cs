@@ -18,17 +18,23 @@ namespace GRASP.Business_logic
 
         private List<Instance> dataset;
 
+        private const int SOFT_WINDOW = 5;
+
+        private double penaltyLate = 0;
+
+        private double penaltyWait = 0;
+
         public GRASPManager(List<Instance> dataset, int vehicleCount, float vehicleCapacity)
         {
             this.vehicleCapacity = vehicleCapacity;
             this.vehicleCount = vehicleCount;
             this.dataset = dataset;
-            InitVehicleCapacity();
+            InitVehicleCapacityAndTW();
         }
 
         #region private methods
 
-        private void InitVehicleCapacity()
+        private void InitVehicleCapacityAndTW()
         {
             currentVehicleCapasity = new List<float>();
             for (int i = 0; i < vehicleCount; i++)
@@ -53,10 +59,12 @@ namespace GRASP.Business_logic
             return newList;
         }
 
-        private void ResetCapacity()
+        private void ResetCapacityAndTime()
         {
             for (int i = 0; i < vehicleCount; i++)
+            {
                 currentVehicleCapasity[i] = 0;
+            }
         }
 
         private bool isRoutesSame(List<List<int>> route1, List<List<int>> route2)
@@ -89,6 +97,43 @@ namespace GRASP.Business_logic
             return newRoute;
         }
 
+        private bool CanExistWithCurrentTimeWindows(List<int> newRoute)
+        {
+            double currentTime = 0.0;
+
+            for (int i = 0; i < newRoute.Count; i++)
+            {
+                var intstance1 = dataset.FirstOrDefault(item => item.ID == newRoute[i]);
+                Instance instance2;
+                if (i + 1 == newRoute.Count)
+                {
+                    instance2 = dataset.FirstOrDefault(item => item.ID == newRoute[0]);
+                }
+                else
+                {
+                    instance2 = dataset.FirstOrDefault(item => item.ID == newRoute[i + 1]);
+                }
+
+                double currDist = FindLength(intstance1, instance2);
+
+
+                double futureTime = currentTime + currDist;
+                bool timeWindowCriteria = (futureTime < (instance2.DueTime + SOFT_WINDOW)); //&& ((futureTime + SOFT_WINDOW) > instance2.ReadyTime);
+
+                if (timeWindowCriteria)
+                {
+                    currentTime += currDist + instance2.ServiceTime;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+
+            return true;
+        }
+
 
         private void ResetDataset()
         {
@@ -101,52 +146,69 @@ namespace GRASP.Business_logic
         private List<int> GreedyAlgorithm(int currentVehicleIndex, double alpha = 0.2)
         {
             var route = new List<int>();
-            int startPoint = 0;
-
-            route.Add(startPoint);
-            dataset.FirstOrDefault(item => item.ID == startPoint).IsDone = true;
-
-            while (!dataset.All(item => item.IsDone))
+            do
             {
-                var distDict = CalculateDistance(startPoint);
+                route.Clear(); 
+                int startPoint = 0;
+                double currentTime = 0.0;
 
-                if (distDict.Count == 0)
-                    break;
+                route.Add(startPoint);
+                dataset.FirstOrDefault(item => item.ID == startPoint).IsDone = true;
 
-                double cMin = distDict.Min(x => x.Value);
-
-                double cMax = distDict.Max(x => x.Value);
-
-                double criteria = cMin + 0.2 * (cMax - cMin);
-                double demandCriteria = vehicleCapacity - currentVehicleCapasity[currentVehicleIndex];
-
-                Random random = new Random();
-
-                var RCL = new HashSet<int>();
-                foreach (var dist in distDict)
+                while (!dataset.All(item => item.IsDone))
                 {
-                    float capacity = dataset.FirstOrDefault(item => item.ID == dist.Key).Demand;
-                    if (dist.Value <= criteria && capacity <= demandCriteria)
+                    var distDict = CalculateDistance(startPoint);
+
+                    if (distDict.Count == 0)
+                        break;
+
+                    double cMin = distDict.Min(x => x.Value);
+
+                    double cMax = distDict.Max(x => x.Value);
+
+                    double criteria = cMin + 0.2 * (cMax - cMin);
+                    double demandCriteria = vehicleCapacity - currentVehicleCapasity[currentVehicleIndex];
+
+                    Random random = new Random();
+
+                    var RCL = new HashSet<int>();
+                    foreach (var dist in distDict)
                     {
-                        RCL.Add(dist.Key);
+                        var tmp_inst = dataset.FirstOrDefault(item => item.ID == dist.Key);
+
+                        double futureTime = currentTime + dist.Value;
+                        bool timeWindowCriteria = (futureTime < tmp_inst.DueTime + SOFT_WINDOW); // && (futureTime + SOFT_WINDOW > tmp_inst.ReadyTime);
+
+                        if (dist.Value <= criteria && tmp_inst.Demand <= demandCriteria && timeWindowCriteria)
+                        {
+                            RCL.Add(dist.Key);
+                        }
+                    }
+
+                    if (RCL.Count == 0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        var prevStartPoint = dataset.FirstOrDefault(item => item.ID == startPoint);
+                        startPoint = RCL.ElementAt(random.Next(RCL.Count));
+                        var inst = dataset.FirstOrDefault(item => item.ID == startPoint);
+                        currentVehicleCapasity[currentVehicleIndex] += inst.Demand;
+
+                        float dist = (float)FindLength(inst, prevStartPoint);
+                        currentTime += dist + inst.ServiceTime;
+
+                        //TO DO: add penalty for waiting and lating
+
+                        route.Add(startPoint);
+
+                        dataset.FirstOrDefault(item => item.ID == startPoint).IsDone = true;
                     }
                 }
+                route.Add(0);
 
-                if (RCL.Count == 0)
-                {
-                    break;
-                }
-                else
-                {
-                    startPoint = RCL.ElementAt(random.Next(RCL.Count));
-                    var inst = dataset.FirstOrDefault(item => item.ID == startPoint);
-                    currentVehicleCapasity[currentVehicleIndex] += inst.Demand;
-                    route.Add(startPoint);
-
-                    dataset.FirstOrDefault(item => item.ID == startPoint).IsDone = true;
-                }
-            }
-            route.Add(0);
+            } while (!CanExistWithCurrentTimeWindows(route) || route.Count <= 2);
 
             return route;
         }
@@ -181,12 +243,12 @@ namespace GRASP.Business_logic
                     {
                         for (int j = i + 1; j < currentRoute[g].Count; j++)
                         {
-                            double oldDistance = CalculateDistanceValueForAllRoute(dataset, currentRoute[g]);
+                            double oldDistance = CalculateDistanceValueForAllRoute(currentRoute[g]);
 
                             var newRoute = twoOptSwap(currentRoute[g], i, j);
-                            double newDistance = CalculateDistanceValueForAllRoute(dataset, newRoute);
+                            double newDistance = CalculateDistanceValueForAllRoute(newRoute);
 
-                            if (newDistance < oldDistance)
+                            if (newDistance < oldDistance && CanExistWithCurrentTimeWindows(newRoute))
                             {
                                 currentRoute[g] = newRoute;
                             }
@@ -222,7 +284,7 @@ namespace GRASP.Business_logic
                 if (iterator != 0)
                 {
                     ResetDataset();
-                    ResetCapacity();
+                    ResetCapacityAndTime();
                     currentRoute.Clear();
                     for (int z = 0; z < vehicleCount && !dataset.All(item => item.IsDone); z++)
                     {
@@ -244,7 +306,7 @@ namespace GRASP.Business_logic
             return bestSolution;
         }
 
-        public double CalculateDistanceValueForAllRoute(List<Instance> dataset, List<int> route)
+        public double CalculateDistanceValueForAllRoute(List<int> route)
         {
             double sum = 0;
 
@@ -291,6 +353,38 @@ namespace GRASP.Business_logic
             }
 
             return sum;
+        }
+
+        public string GetRouteInfo(List<int> route)
+        {
+            string strToShow = string.Empty;
+
+            double time = 0.0;
+
+            for(int i = 0; i < route.Count; i++)
+            {
+                var instance1 = dataset.FirstOrDefault(item => item.ID == route[i]);
+                Instance instance2;
+                if (i + 1 == route.Count)
+                {
+                    instance2 = dataset.FirstOrDefault(item => item.ID == route[0]);
+                }
+                else
+                {
+                    instance2 = dataset.FirstOrDefault(item => item.ID == route[i + 1]);
+                }
+
+                double length = FindLength(instance1, instance2);
+
+                strToShow += "\nCurrent point: " + instance1.ID + " with capacity " + instance1.Demand + "\n";
+                strToShow += "Ready time: " + instance1.ReadyTime + " Due time: " + instance1.DueTime + " Service time: " + instance1.ServiceTime;
+                strToShow += "\nDistance to next point: " + length;
+                strToShow += " Current time: " + time + "\n";
+
+                time += length + instance2.ServiceTime;
+            }
+
+            return strToShow;
         }
     }
 }
