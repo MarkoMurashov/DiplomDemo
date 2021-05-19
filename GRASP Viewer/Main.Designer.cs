@@ -128,9 +128,9 @@
             this.labelInitialDist.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelInitialDist.Location = new System.Drawing.Point(1021, 522);
             this.labelInitialDist.Name = "labelInitialDist";
-            this.labelInitialDist.Size = new System.Drawing.Size(134, 25);
+            this.labelInitialDist.Size = new System.Drawing.Size(73, 25);
             this.labelInitialDist.TabIndex = 5;
-            this.labelInitialDist.Text = "Initial distance";
+            this.labelInitialDist.Text = "Quality";
             // 
             // labelResult
             // 
@@ -139,7 +139,7 @@
             this.labelResult.Name = "labelResult";
             this.labelResult.Size = new System.Drawing.Size(106, 37);
             this.labelResult.TabIndex = 0;
-            this.labelResult.Text = "Result distance";
+            this.labelResult.Text = "Quality";
             // 
             // lblInitialDistValue
             // 
@@ -234,9 +234,9 @@
             this.labelInit.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelInit.Location = new System.Drawing.Point(1077, 13);
             this.labelInit.Name = "labelInit";
-            this.labelInit.Size = new System.Drawing.Size(155, 29);
+            this.labelInit.Size = new System.Drawing.Size(215, 29);
             this.labelInit.TabIndex = 15;
-            this.labelInit.Text = "Initilal result";
+            this.labelInit.Text = "The best solution";
             // 
             // buttonUncheckAll
             // 
