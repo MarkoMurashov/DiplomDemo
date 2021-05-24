@@ -1,10 +1,6 @@
 ﻿using GRASP.Interfaces;
 using GRASP.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GRASP.Business_logic
 {
@@ -15,13 +11,13 @@ namespace GRASP.Business_logic
             IEvaluator evaluator, IDistanceCalculator distanceCalculator, IPenaltyCalculator penaltyCalculator)
         {
             int k = 0;
-            while (k < 50)
+            while (k < Parameters.MAX_LOCAL_SEARCH_SWAP_ITERATION)
             {
                 var oldRouteBeforeLocalSearchCopy = GRASPHelper.CopySolution(currentRoute);
                 double oldQuality = evaluator.EvaluateGlobalRoute(dataset, oldRouteBeforeLocalSearchCopy, distanceCalculator, penaltyCalculator);
 
                 bool WasIpmroved = false;
-                for (int g = 0; g < currentRoute.Count && !WasIpmroved; g++) //10  routes
+                for (int g = 0; g < currentRoute.Count && !WasIpmroved; g++)
                 {
                     if (currentRoute[g].Count <= 2)
                         continue;
@@ -32,22 +28,22 @@ namespace GRASP.Business_logic
                             continue;
 
                         //current route
-                        for (int i = 1; i < currentRoute[g].Count && !WasIpmroved; i++) // 0 1 2 3 4 0 - 2
+                        for (int i = 1; i < currentRoute[g].Count && !WasIpmroved; i++)
                         {
                             int pointFromDiffRoute = currentRoute[g][i];
                             //next route
-                            for (int j = 1; j < currentRoute[z].Count && !WasIpmroved; j++)// 0 5 6 7 0
+                            for (int j = 1; j < currentRoute[z].Count && !WasIpmroved; j++)
                             {
                                 var tmp_copy = GRASPHelper.CopySolution(oldRouteBeforeLocalSearchCopy);
 
-                                tmp_copy[z].Insert(j, pointFromDiffRoute); //0 1 5 6 7 0
+                                tmp_copy[z].Insert(j, pointFromDiffRoute);
 
                                 if (!evaluator.CanExistWithCurrentTimeWindows(dataset, tmp_copy[z], distanceCalculator))
                                 {
                                     continue;
                                 }
 
-                                tmp_copy[g].RemoveAt(i);//0 2 3 4 0
+                                tmp_copy[g].RemoveAt(i);
                                 double localQuality = evaluator.EvaluateGlobalRoute(dataset, tmp_copy, distanceCalculator, penaltyCalculator);
 
                                 if (localQuality < oldQuality)

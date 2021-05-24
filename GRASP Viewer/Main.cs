@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -23,6 +22,10 @@ namespace GRASP_Viewer
         private List<List<int>> result = new List<List<int>>();
 
         private GRASPManager grasp;
+
+        private List<Instance> dataset;
+
+        private string solutionPath;
 
         #endregion
 
@@ -86,12 +89,8 @@ namespace GRASP_Viewer
 
         private void DrawBestSolution()
         {
-            var fileReader = new FileReader();
-            var dataset = fileReader.Read("super df.txt");
-            //var dataset = fileReader.Read("super df 5.txt");
-
             List<List<int>> solution = new List<List<int>>();
-            foreach (var line in File.ReadLines("super df solution.txt"))
+            foreach (var line in File.ReadLines(solutionPath))
             {
                 var values = line.Split(' ').Where(s => !string.IsNullOrEmpty(s)).Select(Int32.Parse).ToList();
                 solution.Add(values);
@@ -101,14 +100,19 @@ namespace GRASP_Viewer
             lblInitialDistValue.Text = grasp.CalculateDistance(solution).ToString();
         }
 
+        private void ValidateDoubleNumber(KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+            (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+        }
+
         #endregion
 
         private void btnRun_Click(object sender, EventArgs e)
         {           
-            var fileReader = new FileReader();
-            var dataset = fileReader.Read("super df.txt");
-            //var dataset = fileReader.Read("super df 5.txt");
-
             if (!int.TryParse(textBoxVehicleCount.Text, out int vCount))
             {
                 MessageBox.Show("Please enter valid value for vehicle count");
@@ -120,8 +124,36 @@ namespace GRASP_Viewer
                 return;
             }
 
+            if(numericUpDown2OptMaxIteration.Value == 0 || numericUpDownGRASPMaxIteration.Value == 0
+                || numericUpDownSwapMaxIteration.Value == 0)
+            {
+                MessageBox.Show("Please enter valid value for max iteration");
+                return;
+            }
+
+            if(dataset == null)
+            {
+                MessageBox.Show("Please enter load dataset");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(solutionPath))
+            {
+                MessageBox.Show("Please enter load the best solution");
+                return;
+            }
+
+            double.TryParse(textBoxAplha.Text, out Parameters.ALPHA);
+            double.TryParse(textBoxReadyTime.Text, out Parameters.ALPHA_READY_TIME);
+            double.TryParse(textBoxWaitPenalty.Text, out Parameters.COEF_WAIT_PENALTY);
+            double.TryParse(textBoxSoftWindow.Text, out Parameters.SOFT_DUE_WINDOW);
+
+            Parameters.MAX_GRASP_ITERATION = (int)numericUpDownGRASPMaxIteration.Value;
+            Parameters.MAX_LOCAL_SEARCH_SWAP_ITERATION = (int)numericUpDownSwapMaxIteration.Value;
+            Parameters.MAX_LOCAL_SEARCH_TWO_OPT_ITERATION = (int)numericUpDown2OptMaxIteration.Value;
+
             grasp = new GRASPManager(dataset, vCount, vCapacity);
-            result = grasp.Execute();
+            result = grasp.Execute(checkBoxSwap.Checked);
 
             DrawRoute(chartMain, dataset, result);
             DrawBestSolution();
@@ -132,7 +164,9 @@ namespace GRASP_Viewer
                 checkedListBoxRoutes.SetItemChecked(i, true);
             }
 
-            lblResultValue.Text = grasp.CalculateDistance(result).ToString();           
+            lblResultValue.Text = grasp.CalculateDistance(result).ToString();
+
+            MessageBox.Show("Done");
         }
 
 
@@ -171,7 +205,6 @@ namespace GRASP_Viewer
                 if(e.Index.ToString() == item.ToString())
                 {
                     chartMain.Series[item.ToString()].Enabled = e.NewValue == CheckState.Checked ? true : false;
-                    //chartInitial.Series[item.ToString()].Enabled = e.NewValue == CheckState.Checked ? true : false;
                 }
             }
         }
@@ -202,11 +235,7 @@ namespace GRASP_Viewer
 
         private void textBoxVehicleCapacity_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-            (e.KeyChar != ','))
-            {
-                e.Handled = true;
-            }
+            ValidateDoubleNumber(e);
         }
 
         private void buttonMoreInfo_Click(object sender, EventArgs e)
@@ -217,11 +246,72 @@ namespace GRASP_Viewer
             {
                 int index = int.Parse(item.ToString());
 
-                strToShow += "\n============= " + index + " ====================\n";
+                strToShow += "\n=====Route # " + index + " =====\n";
                 strToShow += grasp.GetInfo(result[index]);
             }
 
             richTextBoxDetailInfo.Text = strToShow;
+        }
+
+        private void buttonLoadDF_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Title = "Load dataset";
+            dialog.DefaultExt = "txt";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+
+            {
+                string path = dialog.FileName;
+                dataset = new FileReader().Read(path);
+                MessageBox.Show("File loaded successfully");
+            }
+        }
+
+        private void buttonBestSolution_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Title = "Load the best solution";
+            dialog.DefaultExt = "txt";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+
+            {
+                solutionPath = dialog.FileName;
+                MessageBox.Show("File loaded successfully");
+            }
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            textBoxAplha.Text = Parameters.ALPHA.ToString();
+            textBoxReadyTime.Text = Parameters.ALPHA_READY_TIME.ToString();
+            textBoxSoftWindow.Text = Parameters.SOFT_DUE_WINDOW.ToString();
+            textBoxWaitPenalty.Text = Parameters.COEF_WAIT_PENALTY.ToString();
+
+            numericUpDown2OptMaxIteration.Value = Parameters.MAX_LOCAL_SEARCH_TWO_OPT_ITERATION;
+            numericUpDownGRASPMaxIteration.Value = Parameters.MAX_GRASP_ITERATION;
+            numericUpDownSwapMaxIteration.Value = Parameters.MAX_LOCAL_SEARCH_SWAP_ITERATION;
+        }
+
+        private void textBoxAplha_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidateDoubleNumber(e);
+        }
+
+        private void textBoxSoftWindow_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidateDoubleNumber(e);
+        }
+
+        private void textBoxReadyTime_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidateDoubleNumber(e);
+        }
+
+        private void textBoxWaitPenalty_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidateDoubleNumber(e);
         }
     }
 }

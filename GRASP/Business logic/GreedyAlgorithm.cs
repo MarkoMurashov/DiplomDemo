@@ -3,8 +3,6 @@ using GRASP.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GRASP.Business_logic
 {
@@ -25,7 +23,7 @@ namespace GRASP.Business_logic
 
 
 
-        public List<int> Run(float vehicleCapacity, List<float> currentVehicleCapasity, int currentVehicleIndex, double alpha = 0.2)
+        public List<int> Run(float vehicleCapacity, List<float> currentVehicleCapasity, int currentVehicleIndex)
         {
             var route = new List<int>();
             int counter = 0;
@@ -50,7 +48,7 @@ namespace GRASP.Business_logic
 
                     double cMax = distDict.Max(x => x.Value);
 
-                    double criteria = cMin + alpha * (cMax - cMin);
+                    double criteria = cMin + Parameters.ALPHA * (cMax - cMin);
                     double demandCriteria = vehicleCapacity - currentVehicleCapasity[currentVehicleIndex];
 
                     var listWithGoodPoints = new List<Instance>();
@@ -73,7 +71,7 @@ namespace GRASP.Business_logic
                         double cMinReadyTime = listWithGoodPoints.Min(x => x.ReadyTime);
                         double cMaxReadyTime = listWithGoodPoints.Max(x => x.ReadyTime);
 
-                        double criteriaReadyTime = cMinReadyTime + 0.05 * (cMaxReadyTime - cMinReadyTime);
+                        double criteriaReadyTime = cMinReadyTime + Parameters.ALPHA_READY_TIME * (cMaxReadyTime - cMinReadyTime);
 
                         if (point.ReadyTime <= criteriaReadyTime)
                         {

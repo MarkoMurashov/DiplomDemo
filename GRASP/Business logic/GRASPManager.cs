@@ -1,12 +1,7 @@
 ﻿using GRASP.Interfaces;
 using GRASP.Models;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GRASP.Business_logic
 {
@@ -80,8 +75,11 @@ namespace GRASP.Business_logic
           
         #endregion
 
-        public List<List<int>> Execute(int maxIteration = 15, double alpha = 0.2)
+        public List<List<int>> Execute(bool withSwap = false)
         {
+            ResetDataset();
+            ResetCapacityAndTime();
+
             var initialResult = new List<List<int>>();
             for (int z = 0; z < vehicleCount && !dataset.All(item => item.IsDone); z++)
             {
@@ -91,7 +89,7 @@ namespace GRASP.Business_logic
             var currentRoute = GRASPHelper.CopySolution(initialResult);
 
             int iterator = 0;
-            while (iterator < maxIteration)
+            while (iterator < Parameters.MAX_GRASP_ITERATION)
             {
                 if (iterator != 0)
                 {
@@ -104,8 +102,12 @@ namespace GRASP.Business_logic
                     }
                 }
 
-                localSearchTwoOpt.Run(dataset, currentRoute, evaluator, distanceCalculator, penaltyCalculator);
-                var tmp_route = localSearchSwap.Run(dataset, currentRoute, evaluator, distanceCalculator, penaltyCalculator);
+                var tmp_route = localSearchTwoOpt.Run(dataset, currentRoute, evaluator, distanceCalculator, penaltyCalculator);
+
+                if (withSwap)
+                {
+                    tmp_route = GRASPHelper.CopySolution(localSearchSwap.Run(dataset, currentRoute, evaluator, distanceCalculator, penaltyCalculator));
+                }
 
                 double oldQuality = evaluator.EvaluateGlobalRoute(dataset, bestSolution, distanceCalculator, penaltyCalculator);
                 double currentQuality = evaluator.EvaluateGlobalRoute(dataset, tmp_route, distanceCalculator, penaltyCalculator);

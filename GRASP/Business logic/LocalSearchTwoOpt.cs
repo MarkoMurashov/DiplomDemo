@@ -1,10 +1,6 @@
 ﻿using GRASP.Interfaces;
 using GRASP.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GRASP.Business_logic
 {
@@ -14,7 +10,7 @@ namespace GRASP.Business_logic
             IEvaluator evaluator, IDistanceCalculator distanceCalculator, IPenaltyCalculator penaltyCalculator)
         {
             int k = 0;
-            while (k < 50)
+            while (k < Parameters.MAX_LOCAL_SEARCH_TWO_OPT_ITERATION)
             {
                 var oldRouteBeforeLocalSearch = GRASPHelper.CopySolution(currentRoute);
                 for (int g = 0; g < currentRoute.Count; g++)

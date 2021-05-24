@@ -1,16 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GRASP.Business_logic
+﻿namespace GRASP.Business_logic
 {
-    class Parameters
+    public class Parameters
     {
 
-        public const int SOFT_DUE_WINDOW = 15;
+        public static double SOFT_DUE_WINDOW = 15.0;
 
-        public const double COEF_WAIT_PENALTY = 0.005;
+        public static int MAX_LOCAL_SEARCH_TWO_OPT_ITERATION = 50;
+
+        public static int MAX_LOCAL_SEARCH_SWAP_ITERATION = 50;
+
+        public static int MAX_GRASP_ITERATION = 15;
+
+        public static double ALPHA = 0.2;
+
+        public static double ALPHA_READY_TIME = 0.05;
+
+        public static double COEF_WAIT_PENALTY = 0.005;
     }
 }
