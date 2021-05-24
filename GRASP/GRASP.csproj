@@ -41,10 +41,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business logic\DistanceCalculator.cs" />
+    <Compile Include="Business logic\Evaluator.cs" />
     <Compile Include="Business logic\FileReader.cs" />
+    <Compile Include="Business logic\GRASPHelper.cs" />
     <Compile Include="Business logic\GRASPManager.cs" />
+    <Compile Include="Business logic\GreedyAlgorithm.cs" />
+    <Compile Include="Business logic\LocalSearchSwap.cs" />
+    <Compile Include="Business logic\LocalSearchTwoOpt.cs" />
+    <Compile Include="Business logic\Parameters.cs" />
+    <Compile Include="Business logic\PenaltyCalculator.cs" />
+    <Compile Include="Business logic\Visualizer.cs" />
+    <Compile Include="Interfaces\IDistanceCalculator.cs" />
+    <Compile Include="Interfaces\IEvaluator.cs" />
+    <Compile Include="Interfaces\IGreedyAlgorithm.cs" />
+    <Compile Include="Interfaces\ILocalSearch.cs" />
+    <Compile Include="Interfaces\IPenaltyCalculator.cs" />
     <Compile Include="Models\Instance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnRun = new System.Windows.Forms.Button();
             this.chartMain = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnZoomPlus = new System.Windows.Forms.Button();
@@ -55,13 +55,19 @@
             this.buttonCheckAll = new System.Windows.Forms.Button();
             this.buttonMoreInfo = new System.Windows.Forms.Button();
             this.richTextBoxDetailInfo = new System.Windows.Forms.RichTextBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.chartMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartInitial)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(1225, 809);
+            this.btnRun.Location = new System.Drawing.Point(721, 776);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(122, 33);
             this.btnRun.TabIndex = 0;
@@ -71,26 +77,26 @@
             // 
             // chartMain
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartMain.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartMain.Legends.Add(legend1);
-            this.chartMain.Location = new System.Drawing.Point(21, 54);
+            chartArea5.Name = "ChartArea1";
+            this.chartMain.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chartMain.Legends.Add(legend5);
+            this.chartMain.Location = new System.Drawing.Point(17, 78);
             this.chartMain.Name = "chartMain";
             this.chartMain.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartMain.Series.Add(series1);
-            this.chartMain.Size = new System.Drawing.Size(832, 726);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chartMain.Series.Add(series5);
+            this.chartMain.Size = new System.Drawing.Size(725, 741);
             this.chartMain.TabIndex = 1;
             this.chartMain.Text = "Route";
             // 
             // btnZoomPlus
             // 
-            this.btnZoomPlus.Location = new System.Drawing.Point(1225, 731);
+            this.btnZoomPlus.Location = new System.Drawing.Point(1346, 728);
             this.btnZoomPlus.Name = "btnZoomPlus";
-            this.btnZoomPlus.Size = new System.Drawing.Size(122, 33);
+            this.btnZoomPlus.Size = new System.Drawing.Size(147, 53);
             this.btnZoomPlus.TabIndex = 2;
             this.btnZoomPlus.Text = "Zoom +";
             this.btnZoomPlus.UseVisualStyleBackColor = true;
@@ -98,9 +104,9 @@
             // 
             // btnZoomMinus
             // 
-            this.btnZoomMinus.Location = new System.Drawing.Point(1225, 770);
+            this.btnZoomMinus.Location = new System.Drawing.Point(1346, 803);
             this.btnZoomMinus.Name = "btnZoomMinus";
-            this.btnZoomMinus.Size = new System.Drawing.Size(122, 33);
+            this.btnZoomMinus.Size = new System.Drawing.Size(147, 53);
             this.btnZoomMinus.TabIndex = 3;
             this.btnZoomMinus.Text = "Zoom -";
             this.btnZoomMinus.UseVisualStyleBackColor = true;
@@ -108,17 +114,17 @@
             // 
             // chartInitial
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartInitial.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartInitial.Legends.Add(legend2);
-            this.chartInitial.Location = new System.Drawing.Point(871, 54);
+            chartArea6.Name = "ChartArea1";
+            this.chartInitial.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chartInitial.Legends.Add(legend6);
+            this.chartInitial.Location = new System.Drawing.Point(759, 92);
             this.chartInitial.Name = "chartInitial";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartInitial.Series.Add(series2);
-            this.chartInitial.Size = new System.Drawing.Size(476, 453);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chartInitial.Series.Add(series6);
+            this.chartInitial.Size = new System.Drawing.Size(434, 414);
             this.chartInitial.TabIndex = 4;
             this.chartInitial.Text = "Initial";
             // 
@@ -126,7 +132,7 @@
             // 
             this.labelInitialDist.AutoSize = true;
             this.labelInitialDist.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelInitialDist.Location = new System.Drawing.Point(1021, 522);
+            this.labelInitialDist.Location = new System.Drawing.Point(865, 544);
             this.labelInitialDist.Name = "labelInitialDist";
             this.labelInitialDist.Size = new System.Drawing.Size(73, 25);
             this.labelInitialDist.TabIndex = 5;
@@ -135,7 +141,7 @@
             // labelResult
             // 
             this.labelResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelResult.Location = new System.Drawing.Point(288, 792);
+            this.labelResult.Location = new System.Drawing.Point(225, 822);
             this.labelResult.Name = "labelResult";
             this.labelResult.Size = new System.Drawing.Size(106, 37);
             this.labelResult.TabIndex = 0;
@@ -145,7 +151,7 @@
             // 
             this.lblInitialDistValue.AutoSize = true;
             this.lblInitialDistValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblInitialDistValue.Location = new System.Drawing.Point(1163, 521);
+            this.lblInitialDistValue.Location = new System.Drawing.Point(1007, 543);
             this.lblInitialDistValue.Name = "lblInitialDistValue";
             this.lblInitialDistValue.Size = new System.Drawing.Size(23, 25);
             this.lblInitialDistValue.TabIndex = 6;
@@ -155,7 +161,7 @@
             // 
             this.lblResultValue.AutoSize = true;
             this.lblResultValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblResultValue.Location = new System.Drawing.Point(400, 792);
+            this.lblResultValue.Location = new System.Drawing.Point(337, 822);
             this.lblResultValue.Name = "lblResultValue";
             this.lblResultValue.Size = new System.Drawing.Size(23, 25);
             this.lblResultValue.TabIndex = 7;
@@ -163,9 +169,9 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(1225, 692);
+            this.btnClear.Location = new System.Drawing.Point(1346, 648);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(122, 33);
+            this.btnClear.Size = new System.Drawing.Size(147, 53);
             this.btnClear.TabIndex = 8;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -175,7 +181,7 @@
             // 
             this.labelVehicleCount.AutoSize = true;
             this.labelVehicleCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelVehicleCount.Location = new System.Drawing.Point(868, 572);
+            this.labelVehicleCount.Location = new System.Drawing.Point(458, 278);
             this.labelVehicleCount.Name = "labelVehicleCount";
             this.labelVehicleCount.Size = new System.Drawing.Size(136, 25);
             this.labelVehicleCount.TabIndex = 9;
@@ -185,7 +191,7 @@
             // 
             this.labelVehicleCapacity.AutoSize = true;
             this.labelVehicleCapacity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelVehicleCapacity.Location = new System.Drawing.Point(868, 634);
+            this.labelVehicleCapacity.Location = new System.Drawing.Point(458, 340);
             this.labelVehicleCapacity.Name = "labelVehicleCapacity";
             this.labelVehicleCapacity.Size = new System.Drawing.Size(160, 25);
             this.labelVehicleCapacity.TabIndex = 10;
@@ -194,7 +200,7 @@
             // textBoxVehicleCount
             // 
             this.textBoxVehicleCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxVehicleCount.Location = new System.Drawing.Point(1051, 572);
+            this.textBoxVehicleCount.Location = new System.Drawing.Point(641, 278);
             this.textBoxVehicleCount.Name = "textBoxVehicleCount";
             this.textBoxVehicleCount.Size = new System.Drawing.Size(296, 30);
             this.textBoxVehicleCount.TabIndex = 11;
@@ -203,7 +209,7 @@
             // textBoxVehicleCapacity
             // 
             this.textBoxVehicleCapacity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxVehicleCapacity.Location = new System.Drawing.Point(1051, 629);
+            this.textBoxVehicleCapacity.Location = new System.Drawing.Point(641, 335);
             this.textBoxVehicleCapacity.Name = "textBoxVehicleCapacity";
             this.textBoxVehicleCapacity.Size = new System.Drawing.Size(296, 30);
             this.textBoxVehicleCapacity.TabIndex = 12;
@@ -212,9 +218,9 @@
             // checkedListBoxRoutes
             // 
             this.checkedListBoxRoutes.FormattingEnabled = true;
-            this.checkedListBoxRoutes.Location = new System.Drawing.Point(1026, 685);
+            this.checkedListBoxRoutes.Location = new System.Drawing.Point(1088, 648);
             this.checkedListBoxRoutes.Name = "checkedListBoxRoutes";
-            this.checkedListBoxRoutes.Size = new System.Drawing.Size(169, 157);
+            this.checkedListBoxRoutes.Size = new System.Drawing.Size(209, 208);
             this.checkedListBoxRoutes.TabIndex = 13;
             this.checkedListBoxRoutes.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxRoutes_ItemCheck);
             // 
@@ -222,7 +228,7 @@
             // 
             this.labelRes.AutoSize = true;
             this.labelRes.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelRes.Location = new System.Drawing.Point(326, 13);
+            this.labelRes.Location = new System.Drawing.Point(280, 31);
             this.labelRes.Name = "labelRes";
             this.labelRes.Size = new System.Drawing.Size(143, 29);
             this.labelRes.TabIndex = 14;
@@ -232,7 +238,7 @@
             // 
             this.labelInit.AutoSize = true;
             this.labelInit.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelInit.Location = new System.Drawing.Point(1077, 13);
+            this.labelInit.Location = new System.Drawing.Point(865, 46);
             this.labelInit.Name = "labelInit";
             this.labelInit.Size = new System.Drawing.Size(215, 29);
             this.labelInit.TabIndex = 15;
@@ -240,9 +246,9 @@
             // 
             // buttonUncheckAll
             // 
-            this.buttonUncheckAll.Location = new System.Drawing.Point(873, 743);
+            this.buttonUncheckAll.Location = new System.Drawing.Point(912, 728);
             this.buttonUncheckAll.Name = "buttonUncheckAll";
-            this.buttonUncheckAll.Size = new System.Drawing.Size(122, 37);
+            this.buttonUncheckAll.Size = new System.Drawing.Size(147, 57);
             this.buttonUncheckAll.TabIndex = 16;
             this.buttonUncheckAll.Text = "Uncheck all";
             this.buttonUncheckAll.UseVisualStyleBackColor = true;
@@ -250,9 +256,9 @@
             // 
             // buttonCheckAll
             // 
-            this.buttonCheckAll.Location = new System.Drawing.Point(873, 692);
+            this.buttonCheckAll.Location = new System.Drawing.Point(912, 648);
             this.buttonCheckAll.Name = "buttonCheckAll";
-            this.buttonCheckAll.Size = new System.Drawing.Size(122, 35);
+            this.buttonCheckAll.Size = new System.Drawing.Size(147, 55);
             this.buttonCheckAll.TabIndex = 17;
             this.buttonCheckAll.Text = "Check all";
             this.buttonCheckAll.UseVisualStyleBackColor = true;
@@ -260,9 +266,9 @@
             // 
             // buttonMoreInfo
             // 
-            this.buttonMoreInfo.Location = new System.Drawing.Point(873, 794);
+            this.buttonMoreInfo.Location = new System.Drawing.Point(912, 801);
             this.buttonMoreInfo.Name = "buttonMoreInfo";
-            this.buttonMoreInfo.Size = new System.Drawing.Size(122, 35);
+            this.buttonMoreInfo.Size = new System.Drawing.Size(147, 55);
             this.buttonMoreInfo.TabIndex = 18;
             this.buttonMoreInfo.Text = "Show more info";
             this.buttonMoreInfo.UseVisualStyleBackColor = true;
@@ -270,44 +276,79 @@
             // 
             // richTextBoxDetailInfo
             // 
-            this.richTextBoxDetailInfo.Location = new System.Drawing.Point(1372, 54);
+            this.richTextBoxDetailInfo.Location = new System.Drawing.Point(1222, 53);
             this.richTextBoxDetailInfo.Name = "richTextBoxDetailInfo";
-            this.richTextBoxDetailInfo.Size = new System.Drawing.Size(323, 788);
+            this.richTextBoxDetailInfo.Size = new System.Drawing.Size(338, 546);
             this.richTextBoxDetailInfo.TabIndex = 19;
             this.richTextBoxDetailInfo.Text = "";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 23);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1631, 936);
+            this.tabControl1.TabIndex = 20;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.labelVehicleCount);
+            this.tabPage1.Controls.Add(this.labelVehicleCapacity);
+            this.tabPage1.Controls.Add(this.textBoxVehicleCount);
+            this.tabPage1.Controls.Add(this.textBoxVehicleCapacity);
+            this.tabPage1.Controls.Add(this.btnRun);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1623, 907);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.labelRes);
+            this.tabPage2.Controls.Add(this.richTextBoxDetailInfo);
+            this.tabPage2.Controls.Add(this.labelInit);
+            this.tabPage2.Controls.Add(this.buttonMoreInfo);
+            this.tabPage2.Controls.Add(this.chartInitial);
+            this.tabPage2.Controls.Add(this.buttonCheckAll);
+            this.tabPage2.Controls.Add(this.chartMain);
+            this.tabPage2.Controls.Add(this.buttonUncheckAll);
+            this.tabPage2.Controls.Add(this.labelResult);
+            this.tabPage2.Controls.Add(this.checkedListBoxRoutes);
+            this.tabPage2.Controls.Add(this.btnClear);
+            this.tabPage2.Controls.Add(this.lblResultValue);
+            this.tabPage2.Controls.Add(this.btnZoomMinus);
+            this.tabPage2.Controls.Add(this.labelInitialDist);
+            this.tabPage2.Controls.Add(this.btnZoomPlus);
+            this.tabPage2.Controls.Add(this.lblInitialDistValue);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1623, 907);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1707, 857);
-            this.Controls.Add(this.richTextBoxDetailInfo);
-            this.Controls.Add(this.buttonMoreInfo);
-            this.Controls.Add(this.buttonCheckAll);
-            this.Controls.Add(this.buttonUncheckAll);
-            this.Controls.Add(this.labelInit);
-            this.Controls.Add(this.labelRes);
-            this.Controls.Add(this.checkedListBoxRoutes);
-            this.Controls.Add(this.textBoxVehicleCapacity);
-            this.Controls.Add(this.textBoxVehicleCount);
-            this.Controls.Add(this.labelVehicleCapacity);
-            this.Controls.Add(this.labelVehicleCount);
-            this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.lblResultValue);
-            this.Controls.Add(this.lblInitialDistValue);
-            this.Controls.Add(this.labelResult);
-            this.Controls.Add(this.labelInitialDist);
-            this.Controls.Add(this.chartInitial);
-            this.Controls.Add(this.btnZoomMinus);
-            this.Controls.Add(this.btnZoomPlus);
-            this.Controls.Add(this.chartMain);
-            this.Controls.Add(this.btnRun);
+            this.ClientSize = new System.Drawing.Size(1658, 986);
+            this.Controls.Add(this.tabControl1);
             this.Name = "Main";
             this.Text = "Main";
             ((System.ComponentModel.ISupportInitialize)(this.chartMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartInitial)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -334,5 +375,8 @@
         private System.Windows.Forms.Button buttonCheckAll;
         private System.Windows.Forms.Button buttonMoreInfo;
         private System.Windows.Forms.RichTextBox richTextBoxDetailInfo;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }

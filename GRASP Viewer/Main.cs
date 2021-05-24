@@ -13,6 +13,8 @@ namespace GRASP_Viewer
 {
     public partial class Main : Form
     {
+        #region private fields
+
         private int zoomXStart = 0;
         private int zoomXEnd = 100;
         private int zoomYStart = 0;
@@ -21,6 +23,8 @@ namespace GRASP_Viewer
         private List<List<int>> result = new List<List<int>>();
 
         private GRASPManager grasp;
+
+        #endregion
 
         public Main()
         {
@@ -80,14 +84,30 @@ namespace GRASP_Viewer
             }
         }
 
+        private void DrawBestSolution()
+        {
+            var fileReader = new FileReader();
+            var dataset = fileReader.Read("super df.txt");
+            //var dataset = fileReader.Read("super df 5.txt");
+
+            List<List<int>> solution = new List<List<int>>();
+            foreach (var line in File.ReadLines("super df solution.txt"))
+            {
+                var values = line.Split(' ').Where(s => !string.IsNullOrEmpty(s)).Select(Int32.Parse).ToList();
+                solution.Add(values);
+            }
+
+            DrawRoute(chartInitial, dataset, solution);
+            lblInitialDistValue.Text = grasp.CalculateDistance(solution).ToString();
+        }
+
         #endregion
 
         private void btnRun_Click(object sender, EventArgs e)
         {           
             var fileReader = new FileReader();
-            //var dataset = fileReader.Read("super df.txt"); //50
-            var dataset = fileReader.Read("super df 3.txt");
-            //var dataset = fileReader.Read("small test.txt");
+            var dataset = fileReader.Read("super df.txt");
+            //var dataset = fileReader.Read("super df 5.txt");
 
             if (!int.TryParse(textBoxVehicleCount.Text, out int vCount))
             {
@@ -101,10 +121,9 @@ namespace GRASP_Viewer
             }
 
             grasp = new GRASPManager(dataset, vCount, vCapacity);
-            result = grasp.Execute(out List<List<int>> initialRoute);
+            result = grasp.Execute();
 
             DrawRoute(chartMain, dataset, result);
-            //DrawRoute(chartInitial, dataset, initialRoute);
             DrawBestSolution();
 
             for (int i = 0; i < result.Count; i++)
@@ -113,28 +132,10 @@ namespace GRASP_Viewer
                 checkedListBoxRoutes.SetItemChecked(i, true);
             }
 
-            lblResultValue.Text = grasp.CalculateDistanceValueForAllRouteWithVehicles(dataset, result).ToString();
-            //lblInitialDistValue.Text = grasp.EvaluateGlobalRoute(initialRoute).ToString();
-
-           
+            lblResultValue.Text = grasp.CalculateDistance(result).ToString();           
         }
 
-        private void DrawBestSolution()
-        {
-            var fileReader = new FileReader();
-            //var dataset = fileReader.Read("super df.txt");
-            var dataset = fileReader.Read("super df 3.txt");
 
-            List<List<int>> solution = new List<List<int>>();
-            foreach (var line in File.ReadLines("super df 3 solution.txt"))
-            {
-                var values = line.Split(' ').Where(s => !string.IsNullOrEmpty(s)).Select(Int32.Parse).ToList();
-                solution.Add(values);
-            }
-
-            DrawRoute(chartInitial, dataset, solution);
-            lblInitialDistValue.Text = grasp.CalculateDistanceValueForAllRouteWithVehicles(dataset, solution).ToString();
-        }
            
         private void btnZoomPlus_Click(object sender, EventArgs e)
         {
@@ -217,7 +218,7 @@ namespace GRASP_Viewer
                 int index = int.Parse(item.ToString());
 
                 strToShow += "\n============= " + index + " ====================\n";
-                strToShow += grasp.GetRouteInfo(result[index]);
+                strToShow += grasp.GetInfo(result[index]);
             }
 
             richTextBoxDetailInfo.Text = strToShow;
