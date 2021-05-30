@@ -41,17 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business logic\DistanceCalculator.cs" />
-    <Compile Include="Business logic\Evaluator.cs" />
-    <Compile Include="Business logic\FileReader.cs" />
-    <Compile Include="Business logic\GRASPHelper.cs" />
+    <Compile Include="Business logic\Metrics\DistanceCalculator.cs" />
+    <Compile Include="Business logic\Metrics\Evaluator.cs" />
+    <Compile Include="Business logic\Services\FileReader.cs" />
+    <Compile Include="Business logic\Services\GRASPHelper.cs" />
     <Compile Include="Business logic\GRASPManager.cs" />
     <Compile Include="Business logic\GreedyAlgorithm.cs" />
-    <Compile Include="Business logic\LocalSearchSwap.cs" />
-    <Compile Include="Business logic\LocalSearchTwoOpt.cs" />
+    <Compile Include="Business logic\LocalSearch\LocalSearchSwap.cs" />
+    <Compile Include="Business logic\LocalSearch\LocalSearchTwoOpt.cs" />
     <Compile Include="Business logic\Parameters.cs" />
-    <Compile Include="Business logic\PenaltyCalculator.cs" />
-    <Compile Include="Business logic\Visualizer.cs" />
+    <Compile Include="Business logic\Metrics\PenaltyCalculator.cs" />
+    <Compile Include="Business logic\Services\Visualizer.cs" />
     <Compile Include="Interfaces\IDistanceCalculator.cs" />
     <Compile Include="Interfaces\IEvaluator.cs" />
     <Compile Include="Interfaces\IGreedyAlgorithm.cs" />
